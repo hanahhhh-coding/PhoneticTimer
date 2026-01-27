@@ -9,6 +9,10 @@ namespace PhoneticTimer.Audio
     {
         public event EventHandler<byte[]> AudioCaptured;
 
+        public int SampleRate { get; set; } = 16000;
+        public int ChannelCount { get; set; } = 1;
+        public int BytesPerSample { get => 2; }
+
         private WaveInEvent waveIn;
         private bool isRecording;
 
@@ -17,7 +21,7 @@ namespace PhoneticTimer.Audio
             waveIn = new WaveInEvent
             {
                 DeviceNumber = deviceNumber,
-                WaveFormat = new WaveFormat(16000, 1) // 16kHz, mono
+                WaveFormat = new WaveFormat(SampleRate, ChannelCount),
             };
 
             waveIn.DataAvailable += OnDataAvailable;

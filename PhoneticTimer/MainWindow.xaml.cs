@@ -16,9 +16,23 @@ namespace PhoneticTimer
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MainWindowViewModel viewModel;
+
         public MainWindow()
         {
+            viewModel = new MainWindowViewModel();
+            DataContext = viewModel;
             InitializeComponent();
+        }
+
+        private void ButtonStartClick(object sender, RoutedEventArgs e)
+        {
+            viewModel.Start();
+        }
+
+        private void ButtonStopClick(object sender, RoutedEventArgs e)
+        {
+            viewModel.Stop();
         }
     }
 }

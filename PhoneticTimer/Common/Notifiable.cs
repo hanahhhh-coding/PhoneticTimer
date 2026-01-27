@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace PhoneticTimer
+namespace PhoneticTimer.Common
 {
     internal class Notifiable: INotifyPropertyChanged
     {
