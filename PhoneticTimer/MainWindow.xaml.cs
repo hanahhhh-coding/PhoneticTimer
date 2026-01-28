@@ -26,13 +26,18 @@ namespace PhoneticTimer
         }
 
         private void ButtonStartClick(object sender, RoutedEventArgs e)
-        {
+        { 
             viewModel.Start();
         }
 
         private void ButtonStopClick(object sender, RoutedEventArgs e)
         {
             viewModel.Stop();
+        }
+
+        private void ButtonRefreshClick(object sender, RoutedEventArgs e)
+        {
+            viewModel.RefreshAvailableDevices();
         }
     }
 }
