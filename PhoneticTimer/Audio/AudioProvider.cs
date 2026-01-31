@@ -14,7 +14,7 @@ namespace PhoneticTimer.Audio
         public int BytesPerSample { get => 2; }
 
         private WaveInEvent waveIn;
-        private bool isRecording;
+        public bool IsRunning { get; private set; }
 
         public AudioProvider(int deviceNumber = 0)
         {
@@ -39,19 +39,19 @@ namespace PhoneticTimer.Audio
 
         public void Start()
         {
-            if (!isRecording)
+            if (!IsRunning)
             {
                 waveIn.StartRecording();
-                isRecording = true;
+                IsRunning = true;
             }
         }
 
         public void Stop()
         {
-            if (isRecording)
+            if (IsRunning)
             {
                 waveIn.StopRecording();
-                isRecording = false;
+                IsRunning = false;
             }
         }
 

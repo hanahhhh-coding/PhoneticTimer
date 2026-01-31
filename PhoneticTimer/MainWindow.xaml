@@ -9,6 +9,81 @@
         mc:Ignorable="d"
         Background="Black"
         Title="Phonetic Timer" >
+    <Window.Resources>
+        <Style x:Key="RoundButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="Height" Value="60"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Background" Value="#B83333"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Ellipse x:Name="ButtonEllipse"
+                                     Fill="{TemplateBinding Background}"
+                                     Stroke="{TemplateBinding BorderBrush}"
+                                     StrokeThickness="{TemplateBinding BorderThickness}"/>
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonEllipse" Property="Fill" Value="#D84444"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ButtonEllipse" Property="Fill" Value="#982828"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="ButtonEllipse" Property="Fill" Value="#555555"/>
+                                <Setter Property="Opacity" Value="0.5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="SquareButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="Height" Value="60"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#333333"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Rectangle x:Name="ButtonRectangle"
+                                       Fill="{TemplateBinding Background}"
+                                       Stroke="{TemplateBinding BorderBrush}"
+                                       StrokeThickness="{TemplateBinding BorderThickness}"
+                                       RadiusX="5"
+                                       RadiusY="5"/>
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonRectangle" Property="Fill" Value="#222222"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ButtonRectangle" Property="Fill" Value="#111111"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="ButtonRectangle" Property="Fill" Value="#555555"/>
+                                <Setter Property="Opacity" Value="0.5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -20,6 +95,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Border Width="7"
                     CornerRadius="5"
@@ -29,6 +105,28 @@
                        FontSize="50"
                        Text="{Binding TotalPhoneticTime}"
                        Foreground="White"/>
+            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                <Button x:Name="startButton"
+                        Click="ButtonStartClick"
+                        Style="{StaticResource RoundButtonStyle}"
+                        IsEnabled="{Binding CanStart, Mode=OneWay}">
+                    <Path Data="M 0,0 L 0,20 L 15,10 Z"
+                          Fill="White"
+                          Stretch="Uniform"
+                          Width="20"
+                          Height="20"/>
+                </Button>
+                <Button x:Name="endButton"
+                        Click="ButtonStopClick"
+                        Style="{StaticResource RoundButtonStyle}"
+                        IsEnabled="{Binding CanStop, Mode=OneWay}">
+                    <Path Data="M 0,0 L 16,0 L 16,16 L 0,16 Z"
+                          Fill="White"
+                          Stretch="Uniform"
+                          Width="18"
+                          Height="18"/>
+                </Button>
+            </StackPanel>
         </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -40,18 +138,14 @@
                       ItemsSource="{Binding AvailableDevices, Mode=OneWay}"
                       SelectedItem="{Binding SelectedDevice}"/>
             <Button Grid.Column="1"
-                    Content="Refresh"
-                    Click="ButtonRefreshClick"/>
+                    Click="ButtonRefreshClick"
+                    Style="{StaticResource SquareButtonStyle}">
+                <Path Data="M 12,2 A 10,10 0 1,1 2,12 L 5,12 A 7,7 0 1,0 12,5 L 12,8 L 8,4 L 12,0 Z"
+                      Fill="White"
+                      Stretch="Uniform"
+                      Width="15"
+                      Height="15"/>
+            </Button>
         </Grid>
-        <WrapPanel Grid.Row="2">
-            <Button Grid.Row="2"
-                    Content="Start"
-                    Click="ButtonStartClick"
-                    IsEnabled="{Binding CanStart, Mode=OneWay}"/>
-            <Button Grid.Row="3"
-                    Content="Stop"
-                    IsEnabled="{Binding CanStop, Mode=OneWay}"
-                    Click="ButtonStopClick"/>
-        </WrapPanel>
     </Grid>
 </Window>
