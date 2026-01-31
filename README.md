@@ -1,4 +1,4 @@
-- Help record how much time you have actually spent speaking.
+- Help to log how much time you have actually spent speaking.
 - Using webRTC VAD.
 - Using NAudio for recording.
 
