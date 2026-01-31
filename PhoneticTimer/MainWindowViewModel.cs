@@ -61,7 +61,7 @@ namespace PhoneticTimer
 
         public bool CanStart
         {
-            get => SelectedDevice != null;
+            get => SelectedDevice != null && AudioProvider == null;
         }
 
         public bool CanStop
@@ -95,6 +95,7 @@ namespace PhoneticTimer
             VoiceDetector = new VoiceDetector();
             AudioProvider.AudioCaptured += AudioProvider_AudioCaptured;
             AudioProvider.Start();
+            OnPropertyChanged(nameof(CanStart));
             OnPropertyChanged(nameof(CanStop));
         }
 
@@ -121,6 +122,8 @@ namespace PhoneticTimer
                 AudioProvider = null;
                 VoiceDetector?.Dispose();
                 VoiceDetector = null;
+                OnPropertyChanged(nameof(CanStart));
+                OnPropertyChanged(nameof(CanStop));
             }
             catch(Exception exception)
             {
