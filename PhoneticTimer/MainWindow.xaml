@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PhoneticTimer" 
+        xmlns:local="clr-namespace:PhoneticTimer"
+        xmlns:common="clr-namespace:PhoneticTimer.Common"
         SizeToContent="WidthAndHeight"
         d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
         mc:Ignorable="d"
@@ -11,6 +12,7 @@
         Title="Phonetic Timer" >
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <common:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>
         <Style x:Key="RoundButtonStyle" TargetType="Button">
             <Setter Property="Width" Value="60"/>
             <Setter Property="Height" Value="60"/>
@@ -61,7 +63,7 @@
                         <Grid>
                             <Rectangle x:Name="ButtonRectangle"
                                        Fill="{TemplateBinding Background}"
-                                       Stroke="{TemplateBinding BorderBrush}"
+                                       Stroke="Transparent"
                                        StrokeThickness="{TemplateBinding BorderThickness}"
                                        RadiusX="5"
                                        RadiusY="5"/>
@@ -209,7 +211,7 @@
                 <Button x:Name="startButton"
                         Click="ButtonStartClick"
                         Style="{StaticResource RoundButtonStyle}"
-                        Visibility="{Binding CanStart, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        Visibility="{Binding IsRunning, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
                     <Path Data="M 0,0 L 0,20 L 15,10 Z"
                           Fill="White"
                           Stretch="Uniform"
@@ -219,7 +221,7 @@
                 <Button x:Name="endButton"
                         Click="ButtonStopClick"
                         Style="{StaticResource RoundButtonStyle}"
-                        Visibility="{Binding CanStop, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <Path Data="M 0,0 L 16,0 L 16,16 L 0,16 Z"
                           Fill="White"
                           Stretch="Uniform"
@@ -229,7 +231,7 @@
             </Grid>
         </Grid>
         <Grid Grid.Row="1"
-              Visibility="{Binding CanStart, Converter={StaticResource BooleanToVisibilityConverter}}">
+              Visibility="{Binding IsRunning, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>

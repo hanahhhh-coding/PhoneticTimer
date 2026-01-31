@@ -69,6 +69,10 @@ namespace PhoneticTimer
             get => AudioProvider != null;
         }
 
+        public bool IsRunning
+        {
+            get => AudioProvider != null && AudioProvider.IsRunning;
+        }
 
         public MainWindowViewModel()
         {
@@ -97,6 +101,7 @@ namespace PhoneticTimer
             AudioProvider.Start();
             OnPropertyChanged(nameof(CanStart));
             OnPropertyChanged(nameof(CanStop));
+            OnPropertyChanged(nameof(IsRunning));
         }
 
         private void AudioProvider_AudioCaptured(object? sender, byte[] e)
@@ -124,6 +129,7 @@ namespace PhoneticTimer
                 VoiceDetector = null;
                 OnPropertyChanged(nameof(CanStart));
                 OnPropertyChanged(nameof(CanStop));
+                OnPropertyChanged(nameof(IsRunning));
             }
             catch(Exception exception)
             {
